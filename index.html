@@ -7,391 +7,567 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            --green-dark: #006B3F;
-            --green-mid: #008C5A;
-            --green-light: #4EC99B;
+            --primary: #006B3F;
+            --primary-light: #008C5A;
+            --accent: #4EC99B;
+            --dark: #0A1A0F;
             --white: #FFFFFF;
-            --gray: #6B7280;
-            --light-gray: #F3F4F6;
         }
-        html, body { font-family: 'Inter', sans-serif; background: #0A0A0A; overflow: hidden; height: 100%; width: 100%; }
+        
+        html, body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--dark); 
+            overflow: hidden; 
+            height: 100%; 
+        }
         
         .slide {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .slide.active { display: flex; opacity: 1; }
+
+        /* ===== SLIDE 1: HERO ===== */
+        .s1 {
+            background: linear-gradient(135deg, #001a0d 0%, #003320 50%, #001a0d 100%);
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 50px 70px;
-            overflow-y: auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        .slide.active { display: flex; }
-
-        .slide-1 { background: linear-gradient(135deg, #006B3F 0%, #004D2C 50%, #002D1A 100%); }
-        .slide-2, .slide-3, .slide-4, .slide-5, .slide-6, .slide-7, .slide-8, .slide-9, .slide-10, .slide-11 { background: linear-gradient(180deg, #FFFFFF 0%, #F8FAF9 100%); }
-        .slide-12 { background: linear-gradient(135deg, #006B3F 0%, #004D2C 50%, #002D1A 100%); }
-
-        .slide-header {
-            width: 100%;
-            padding: 18px 35px;
-            background: linear-gradient(90deg, var(--green-dark), var(--green-mid));
-            border-radius: 14px;
-            margin-bottom: 25px;
+        .s1::before {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1920&q=80') center/cover;
+            opacity: 0.15;
         }
-        .slide-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; color: var(--white); }
-        .slide-header p { color: rgba(255,255,255,0.8); font-size: 13px; margin-top: 4px; }
+        .s1-content { position: relative; z-index: 2; }
+        .s1-badge { 
+            display: inline-block; 
+            background: rgba(78,201,155,0.15); 
+            border: 1px solid rgba(78,201,155,0.3);
+            padding: 12px 32px; 
+            border-radius: 50px; 
+            color: var(--accent); 
+            font-size: 13px; 
+            letter-spacing: 4px; 
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+        .s1 h1 { 
+            font-family: 'Space Grotesk', sans-serif; 
+            font-size: clamp(60px, 12vw, 140px); 
+            font-weight: 800; 
+            color: var(--white); 
+            line-height: 0.9;
+            margin-bottom: 30px;
+        }
+        .s1 h1 span { 
+            background: linear-gradient(135deg, #4EC99B 0%, #00D9A7 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .s1-sub { 
+            font-size: clamp(16px, 2vw, 24px); 
+            color: rgba(255,255,255,0.6); 
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .s1-tag { 
+            font-size: 18px; 
+            color: rgba(255,255,255,0.4);
+            max-width: 500px;
+        }
 
-        /* Title */
-        .title-content { text-align: center; position: relative; z-index: 10; }
-        .enactus-badge { display: inline-block; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 10px 28px; border-radius: 50px; color: var(--white); font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 25px; }
-        .main-title { font-family: 'Space Grotesk', sans-serif; font-size: 90px; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 15px; }
-        .main-title span { background: linear-gradient(90deg, #4EC99B, #00C9A7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .subtitle { font-size: 20px; color: rgba(255,255,255,0.8); letter-spacing: 2px; margin-bottom: 30px; }
-        .tagline { font-size: 16px; color: rgba(255,255,255,0.6); }
+        /* ===== SLIDE 2: PROBLEM ===== */
+        .s2 { background: var(--white); flex-direction: column; padding: 0; }
+        .s2-hero {
+            width: 100%; height: 45%;
+            background: url('https://images.unsplash.com/photo-1604187351574-c75ca79f5807?w=1920&q=80') center/cover;
+            position: relative;
+        }
+        .s2-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 120px;
+            background: linear-gradient(transparent, white);
+        }
+        .s2-content {
+            width: 100%; padding: 0 80px;
+            margin-top: -60px;
+            position: relative;
+            z-index: 2;
+        }
+        .s2-header {
+            background: var(--primary);
+            padding: 24px 40px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        .s2-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 32px; color: var(--white); }
+        .s2-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+        .s2-stat {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 20px;
+            padding: 30px;
+            color: var(--white);
+        }
+        .s2-stat .num { font-family: 'Space Grotesk', sans-serif; font-size: 48px; font-weight: 700; }
+        .s2-stat .label { font-size: 14px; opacity: 0.8; margin-top: 8px; }
+        .s2-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+        .s2-card {
+            background: #F8FAF9;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 3px solid var(--primary);
+        }
+        .s2-card h4 { font-size: 14px; color: var(--primary); margin-bottom: 6px; }
+        .s2-card p { font-size: 12px; color: #666; line-height: 1.5; }
 
-        /* Problem */
-        .problem-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 25px; width: 100%; }
-        .impact-card { background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); border-radius: 20px; padding: 25px; color: var(--white); }
-        .impact-card h3 { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; opacity: 0.8; }
-        .stat-item { margin-bottom: 20px; }
-        .stat-number { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 700; background: linear-gradient(90deg, #4EC99B, #00C9A7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .stat-label { font-size: 12px; opacity: 0.7; margin-top: 3px; }
-        .problems-section { display: flex; flex-direction: column; gap: 12px; }
-        .problem-card { background: var(--white); border-radius: 10px; padding: 16px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 3px solid var(--green-mid); }
-        .problem-card h4 { font-size: 13px; font-weight: 600; color: var(--green-dark); margin-bottom: 4px; }
-        .problem-card p { font-size: 11px; color: var(--gray); line-height: 1.4; }
-        .global-push { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; width: 100%; }
-        .push-card { background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); border-radius: 10px; padding: 16px; text-align: center; color: var(--white); }
-        .push-card h4 { font-size: 11px; letter-spacing: 1px; margin-bottom: 6px; }
-        .push-card p { font-size: 10px; opacity: 0.8; line-height: 1.4; }
+        /* ===== SLIDE 3: INDUSTRY ===== */
+        .s3 { background: linear-gradient(180deg, #F8FAF9 0%, var(--white) 100%); flex-direction: column; padding: 50px 80px; }
+        .s3-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; width: 100%; margin-top: 30px; }
+        .s3-circles { display: flex; align-items: center; justify-content: center; }
+        .circle-3 { width: 240px; height: 240px; border-radius: 50%; background: linear-gradient(135deg, #4EC99B, #00D9A7); display: flex; align-items: center; justify-content: center; }
+        .circle-2 { width: 175px; height: 175px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-light), var(--primary)); display: flex; align-items: center; justify-content: center; }
+        .circle-1 { width: 110px; height: 110px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #003320); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
+        .circle-1 .val { font-family: 'Space Grotesk'; font-size: 18px; font-weight: 700; }
+        .circle-1 .txt { font-size: 10px; opacity: 0.7; }
 
-        /* Industry */
-        .industry-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; width: 100%; margin-top: 15px; }
-        .tam-circle { display: flex; align-items: center; justify-content: center; }
-        .circle-outer { width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #4EC99B, #00C9A7); display: flex; align-items: center; justify-content: center; }
-        .circle-middle { width: 145px; height: 145px; border-radius: 50%; background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); display: flex; align-items: center; justify-content: center; }
-        .circle-inner { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--green-dark), #004D2C); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--white); }
-        .circle-inner .label { font-size: 9px; opacity: 0.7; }
-        .circle-inner .value { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; }
-        .info-box { background: var(--white); border-radius: 14px; padding: 22px; box-shadow: 0 8px 30px rgba(0,0,0,0.07); }
-        .info-box h3 { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--green-dark); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--light-gray); }
-        .justification-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
-        .justification-item .icon { width: 18px; height: 18px; background: linear-gradient(135deg, var(--green-light), var(--green-mid)); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: white; font-size: 9px; }
-        .justification-item p { font-size: 11px; color: var(--gray); line-height: 1.4; }
-        .cost-bar { margin-bottom: 10px; }
-        .cost-bar .label { font-size: 10px; color: var(--gray); margin-bottom: 3px; }
-        .cost-bar .bar { height: 22px; border-radius: 11px; display: flex; align-items: center; padding: 0 8px; color: var(--white); font-size: 10px; font-weight: 600; }
-        .cost-bar:nth-child(1) .bar { background: linear-gradient(90deg, var(--green-light), #00C9A7); width: 25%; }
-        .cost-bar:nth-child(2) .bar { background: linear-gradient(90deg, var(--green-mid), var(--green-dark)); width: 35%; }
-        .cost-bar:nth-child(3) .bar { background: linear-gradient(90deg, var(--green-dark), #004D2C); width: 65%; }
-        .cost-bar:nth-child(4) .bar { background: linear-gradient(90deg, #004D2C, #002D1A); width: 85%; }
+        /* ===== SLIDE 4: SOLUTION ===== */
+        .s4 { background: var(--white); flex-direction: column; padding: 50px 80px; }
+        .s4-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; margin-top: 25px; }
+        .s4-card {
+            background: #F8FAF9;
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .s4-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+        .s4-num {
+            width: 44px; height: 44px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            font-family: 'Space Grotesk';
+            font-size: 18px; font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .s4-card h3 { font-size: 15px; color: var(--primary); margin-bottom: 8px; }
+        .s4-card p { font-size: 12px; color: #666; line-height: 1.6; }
 
-        /* Features */
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%; }
-        .feature-card { background: var(--white); border-radius: 14px; padding: 22px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); border-top: 3px solid var(--green-mid); }
-        .feature-number { width: 36px; height: 36px; background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--white); font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 12px; }
-        .feature-card h3 { font-size: 13px; font-weight: 600; color: var(--green-dark); margin-bottom: 6px; }
-        .feature-card p { font-size: 10px; color: var(--gray); line-height: 1.5; }
+        /* ===== SLIDE 5: COATINGS ===== */
+        .s5 { background: linear-gradient(180deg, var(--white) 0%, #F0FAF5 100%); flex-direction: column; padding: 50px 80px; }
+        .s5-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; margin-top: 25px; }
+        .s5-card {
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 320px;
+        }
+        .s5-card.pla { background: url('https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=800&q=80') center/cover; }
+        .s5-card.seaweed { background: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&q=80') center/cover; }
+        .s5-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(0,51,32,0.3) 0%, rgba(0,51,32,0.9) 100%);
+        }
+        .s5-card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; }
+        .s5-card h2 { font-family: 'Space Grotesk'; font-size: 28px; margin-bottom: 20px; }
+        .s5-card ul { list-style: none; }
+        .s5-card li { font-size: 14px; margin-bottom: 12px; padding-left: 20px; position: relative; opacity: 0.9; }
+        .s5-card li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
 
-        /* Coatings */
-        .coatings-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; width: 100%; }
-        .coating-card { border-radius: 18px; padding: 30px; color: var(--white); }
-        .coating-card.pla { background: linear-gradient(135deg, var(--green-dark), #004D2C); }
-        .coating-card.seaweed { background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); }
-        .coating-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 18px; }
-        .coating-feature { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .coating-feature .dot { width: 8px; height: 8px; background: var(--green-light); border-radius: 50%; }
-        .coating-feature p { font-size: 12px; opacity: 0.9; }
+        /* ===== SLIDE 6: PLA PROCESS ===== */
+        .s6 { background: var(--white); flex-direction: column; padding: 50px 80px; }
+        .s6-flow { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 35px 0; }
+        .s6-step { text-align: center; }
+        .s6-circle {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white;
+            margin: 0 auto 12px;
+            box-shadow: 0 10px 30px rgba(0,107,63,0.3);
+        }
+        .s6-circle .n { font-family: 'Space Grotesk'; font-size: 28px; font-weight: 700; }
+        .s6-circle .t { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; }
+        .s6-step p { font-size: 12px; color: #666; max-width: 110px; line-height: 1.4; }
+        .s6-arrow { font-size: 32px; color: var(--accent); margin-bottom: 40px; }
+        .s6-info { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+        .s6-box { border-radius: 16px; padding: 28px; }
+        .s6-box.light { background: #F8FAF9; }
+        .s6-box.dark { background: linear-gradient(135deg, var(--primary-light), var(--primary)); color: white; }
+        .s6-box h3 { font-size: 16px; margin-bottom: 14px; }
+        .s6-box.light h3 { color: var(--primary); }
+        .s6-box li { font-size: 13px; margin-bottom: 10px; padding-left: 18px; position: relative; line-height: 1.5; }
+        .s6-box.light li { color: #666; }
+        .s6-box.dark li { color: rgba(255,255,255,0.9); }
+        .s6-box li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
 
-        /* Process Flow */
-        .process-flow { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 25px 0; width: 100%; }
-        .process-step { text-align: center; }
-        .step-circle { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--white); margin: 0 auto 10px; }
-        .step-circle .num { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; }
-        .step-circle .label { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        .process-step p { font-size: 10px; color: var(--gray); max-width: 90px; line-height: 1.4; }
-        .step-arrow { font-size: 24px; color: var(--green-mid); margin-bottom: 35px; }
-        .info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
-        .info-panel { border-radius: 14px; padding: 22px; }
-        .info-panel.light { background: var(--light-gray); }
-        .info-panel.dark { background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); color: var(--white); }
-        .info-panel h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
-        .info-panel.light h3 { color: var(--green-dark); }
-        .info-panel ul { list-style: none; padding: 0; }
-        .info-panel ul li { font-size: 11px; margin-bottom: 7px; padding-left: 16px; position: relative; line-height: 1.5; }
-        .info-panel.light ul li { color: var(--gray); }
-        .info-panel.dark ul li { color: rgba(255,255,255,0.9); }
-        .info-panel ul li::before { content: '→'; position: absolute; left: 0; color: var(--green-light); }
+        /* ===== SLIDE 7: CHALLENGES ===== */
+        .s7 { background: linear-gradient(180deg, #F8FAF9 0%, var(--white) 100%); flex-direction: column; padding: 50px 80px; }
+        .s7-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; margin-bottom: 24px; }
+        .s7-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+        .s7-card-head { background: linear-gradient(135deg, var(--primary), var(--primary-light)); padding: 18px 22px; color: white; }
+        .s7-card-head h3 { font-size: 15px; }
+        .s7-card-body { padding: 22px; }
+        .s7-card-body p { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 14px; }
+        .s7-tag { display: inline-block; background: linear-gradient(135deg, var(--accent), var(--primary-light)); color: white; padding: 6px 14px; border-radius: 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; }
+        .s7-banner { background: linear-gradient(135deg, var(--primary), #003320); border-radius: 16px; padding: 30px 40px; text-align: center; color: white; width: 100%; }
+        .s7-banner h3 { font-family: 'Space Grotesk'; font-size: 20px; margin-bottom: 12px; }
+        .s7-banner p { font-size: 14px; opacity: 0.85; line-height: 1.6; max-width: 700px; margin: 0 auto; }
 
-        /* Challenges */
-        .challenges-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%; margin-bottom: 20px; }
-        .challenge-card { background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
-        .challenge-header { background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); padding: 14px 18px; color: var(--white); }
-        .challenge-header h3 { font-size: 13px; font-weight: 600; }
-        .challenge-body { padding: 18px; }
-        .challenge-body p { font-size: 11px; color: var(--gray); line-height: 1.5; margin-bottom: 10px; }
-        .challenge-tag { display: inline-block; background: linear-gradient(135deg, var(--green-light), var(--green-mid)); color: var(--white); padding: 4px 10px; border-radius: 12px; font-size: 9px; font-weight: 600; text-transform: uppercase; }
-        .takeaway-banner { background: linear-gradient(135deg, var(--green-dark), #004D2C); border-radius: 14px; padding: 25px 35px; text-align: center; color: var(--white); width: 100%; }
-        .takeaway-banner h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; margin-bottom: 10px; }
-        .takeaway-banner p { font-size: 13px; opacity: 0.85; line-height: 1.6; max-width: 750px; margin: 0 auto; }
+        /* ===== SLIDE 8: SEAWEED ===== */
+        .s8 { background: var(--white); flex-direction: column; padding: 50px 80px; }
+        .s8-steps { display: flex; gap: 24px; margin: 30px 0; width: 100%; }
+        .s8-step { text-align: center; flex: 1; }
+        .s8-circle {
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; margin: 0 auto 12px;
+        }
+        .s8-circle .n { font-family: 'Space Grotesk'; font-size: 24px; font-weight: 700; }
+        .s8-circle .t { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .s8-step h4 { font-size: 14px; color: var(--primary); margin-bottom: 6px; }
+        .s8-step p { font-size: 12px; color: #666; line-height: 1.5; }
 
-        /* Seaweed */
-        .seaweed-steps { display: flex; gap: 20px; margin: 25px 0; width: 100%; }
-        .seaweed-step { text-align: center; flex: 1; }
-        .seaweed-step .circle { width: 75px; height: 75px; border-radius: 50%; background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--white); margin: 0 auto 10px; }
-        .seaweed-step .circle .num { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; }
-        .seaweed-step .circle .txt { font-size: 7px; text-transform: uppercase; letter-spacing: 1px; }
-        .seaweed-step h4 { font-size: 12px; font-weight: 600; color: var(--green-dark); margin-bottom: 5px; }
-        .seaweed-step p { font-size: 10px; color: var(--gray); line-height: 1.4; }
+        /* ===== SLIDE 9: SEAWEED CHALLENGES ===== */
+        .s9 { background: linear-gradient(180deg, var(--white) 0%, #F8FAF9 100%); flex-direction: column; padding: 50px 80px; }
+        .s9-main { background: #F0FAF5; border-radius: 20px; padding: 35px 50px; text-align: center; margin-bottom: 24px; width: 100%; }
+        .s9-main h3 { font-family: 'Space Grotesk'; font-size: 22px; color: var(--primary); margin-bottom: 12px; }
+        .s9-main p { font-size: 15px; color: #666; line-height: 1.6; max-width: 650px; margin: 0 auto; }
+        .s9-split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+        .s9-card { border-radius: 16px; padding: 28px; color: white; }
+        .s9-card.a { background: linear-gradient(135deg, var(--primary-light), var(--primary)); }
+        .s9-card.b { background: linear-gradient(135deg, var(--primary), #003320); }
+        .s9-card h3 { font-size: 17px; margin-bottom: 16px; }
+        .s9-card li { font-size: 13px; margin-bottom: 10px; padding-left: 18px; position: relative; opacity: 0.9; line-height: 1.5; }
+        .s9-card li::before { content: '•'; position: absolute; left: 0; color: var(--accent); }
 
-        /* Main Challenge */
-        .main-challenge { background: var(--light-gray); border-radius: 14px; padding: 25px 35px; text-align: center; margin-bottom: 20px; width: 100%; }
-        .main-challenge h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; color: var(--green-dark); margin-bottom: 10px; }
-        .main-challenge p { font-size: 13px; color: var(--gray); line-height: 1.6; max-width: 650px; margin: 0 auto; }
-        .challenges-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
-        .split-card { border-radius: 14px; padding: 25px; color: var(--white); }
-        .split-card.factors { background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); }
-        .split-card.insight { background: linear-gradient(135deg, var(--green-dark), #004D2C); }
-        .split-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
-        .split-card ul { list-style: none; padding: 0; }
-        .split-card ul li { font-size: 11px; margin-bottom: 8px; padding-left: 16px; position: relative; opacity: 0.9; line-height: 1.5; }
-        .split-card ul li::before { content: '•'; position: absolute; left: 0; color: var(--green-light); }
+        /* ===== SLIDE 10: TESTING ===== */
+        .s10 { background: linear-gradient(180deg, #F8FAF9 0%, var(--white) 100%); flex-direction: column; padding: 50px 80px; }
+        .s10-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; margin-bottom: 24px; }
+        .s10-photo {
+            border-radius: 16px;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .s10-photo::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+        }
+        .s10-photo:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&q=80'); }
+        .s10-photo:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80'); }
+        .s10-photo:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80'); }
+        .s10-photo span { position: absolute; bottom: 20px; left: 20px; font-size: 14px; font-weight: 600; z-index: 2; }
+        .s10-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%; background: linear-gradient(135deg, var(--primary), #003320); border-radius: 20px; padding: 35px; }
+        .s10-metric { text-align: center; color: white; }
+        .s10-metric .num { font-family: 'Space Grotesk'; font-size: 40px; font-weight: 700; background: linear-gradient(90deg, #4EC99B, #00D9A7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .s10-metric .txt { font-size: 12px; opacity: 0.7; margin-top: 6px; }
 
-        /* Testing */
-        .testing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%; margin-bottom: 20px; }
-        .test-card { background: var(--white); border-radius: 14px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
-        .test-card .icon-circle { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 18px; }
-        .test-card h3 { font-size: 13px; font-weight: 600; color: var(--green-dark); margin-bottom: 6px; }
-        .test-card p { font-size: 11px; color: var(--gray); line-height: 1.5; }
-        .impact-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; background: linear-gradient(135deg, var(--green-dark), #004D2C); border-radius: 14px; padding: 25px; }
-        .metric { text-align: center; color: var(--white); }
-        .metric .number { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; background: linear-gradient(90deg, #4EC99B, #00C9A7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .metric .label { font-size: 10px; opacity: 0.7; margin-top: 4px; line-height: 1.4; }
+        /* ===== SLIDE 11: ROADMAP ===== */
+        .s11 { background: var(--white); flex-direction: column; padding: 50px 80px; }
+        .s11-timeline { display: flex; gap: 16px; margin: 30px 0; width: 100%; position: relative; }
+        .s11-timeline::before { content: ''; position: absolute; top: 40px; left: 12%; right: 12%; height: 3px; background: linear-gradient(90deg, var(--accent), var(--primary)); }
+        .s11-item { text-align: center; flex: 1; position: relative; z-index: 2; }
+        .s11-circle {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; margin: 0 auto 14px;
+            border: 3px solid white;
+            box-shadow: 0 8px 25px rgba(0,107,63,0.3);
+        }
+        .s11-item:nth-child(1) .s11-circle { background: linear-gradient(135deg, #4EC99B, #00D9A7); }
+        .s11-item:nth-child(2) .s11-circle { background: linear-gradient(135deg, var(--primary-light), var(--primary)); }
+        .s11-item:nth-child(3) .s11-circle { background: linear-gradient(135deg, var(--primary), #003320); }
+        .s11-item:nth-child(4) .s11-circle { background: linear-gradient(135deg, #003320, #001a0d); }
+        .s11-circle .p { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+        .s11-circle .t { font-family: 'Space Grotesk'; font-size: 10px; font-weight: 600; }
+        .s11-item h4 { font-size: 13px; color: var(--primary); margin-bottom: 4px; }
+        .s11-item p { font-size: 11px; color: #666; }
+        .s11-goals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; margin-top: 20px; }
+        .s11-goal { background: #F8FAF9; border-radius: 14px; overflow: hidden; }
+        .s11-goal-head { background: var(--primary); padding: 14px 20px; color: white; }
+        .s11-goal-head h3 { font-size: 12px; letter-spacing: 1px; }
+        .s11-goal-body { padding: 20px; }
+        .s11-goal-body p { font-size: 12px; color: #666; line-height: 1.5; }
 
-        /* Timeline */
-        .timeline { display: flex; gap: 10px; margin: 25px 0; width: 100%; position: relative; }
-        .timeline::before { content: ''; position: absolute; top: 35px; left: 15%; right: 15%; height: 3px; background: linear-gradient(90deg, var(--green-light), var(--green-dark)); border-radius: 2px; }
-        .timeline-item { text-align: center; flex: 1; position: relative; z-index: 1; }
-        .timeline-circle { width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--white); margin: 0 auto 12px; border: 3px solid var(--white); box-shadow: 0 6px 20px rgba(0,107,63,0.3); }
-        .timeline-item:nth-child(1) .timeline-circle { background: linear-gradient(135deg, #4EC99B, #00C9A7); }
-        .timeline-item:nth-child(2) .timeline-circle { background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); }
-        .timeline-item:nth-child(3) .timeline-circle { background: linear-gradient(135deg, var(--green-dark), #004D2C); }
-        .timeline-item:nth-child(4) .timeline-circle { background: linear-gradient(135deg, #004D2C, #002D1A); }
-        .timeline-circle .phase { font-size: 7px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
-        .timeline-circle .time { font-family: 'Space Grotesk', sans-serif; font-size: 9px; font-weight: 600; }
-        .timeline-item h4 { font-size: 11px; font-weight: 600; color: var(--green-dark); margin-bottom: 4px; }
-        .timeline-item p { font-size: 9px; color: var(--gray); line-height: 1.4; }
-        .goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%; margin-top: 18px; }
-        .goal-card { background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
-        .goal-card .header { background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); padding: 12px 18px; color: var(--white); }
-        .goal-card .header h3 { font-size: 11px; font-weight: 600; letter-spacing: 1px; }
-        .goal-card .body { padding: 18px; }
-        .goal-card .body p { font-size: 11px; color: var(--gray); line-height: 1.5; }
+        /* ===== SLIDE 12: THANK YOU ===== */
+        .s12 {
+            background: linear-gradient(135deg, #001a0d 0%, #003320 50%, #001a0d 100%);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .s12::before {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1920&q=80') center/cover;
+            opacity: 0.1;
+        }
+        .s12-content { position: relative; z-index: 2; }
+        .s12 h1 { font-family: 'Space Grotesk'; font-size: clamp(50px, 10vw, 100px); font-weight: 800; color: white; margin-bottom: 20px; }
+        .s12 .tag { font-size: 18px; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 30px; }
+        .s12 .org { font-size: 16px; color: rgba(255,255,255,0.5); }
+        .s12-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(90deg, var(--primary-light), var(--accent)); display: flex; align-items: center; justify-content: center; z-index: 2; }
+        .s12-bar p { color: white; font-size: 13px; letter-spacing: 3px; }
 
-        /* Thank You */
-        .thankyou-content { position: relative; z-index: 10; text-align: center; }
-        .thankyou-content h1 { font-family: 'Space Grotesk', sans-serif; font-size: 65px; font-weight: 800; color: var(--white); margin-bottom: 15px; }
-        .thankyou-content .tagline { font-size: 16px; color: var(--green-light); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 25px; }
-        .thankyou-content .org { font-size: 15px; color: rgba(255,255,255,0.7); }
-        .bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 45px; background: linear-gradient(90deg, var(--green-mid), var(--green-light)); display: flex; align-items: center; justify-content: center; z-index: 10; }
-        .bottom-bar p { color: var(--white); font-size: 12px; letter-spacing: 2px; }
+        /* ===== HEADER COMPONENT ===== */
+        .hdr { width: 100%; padding: 20px 40px; background: linear-gradient(90deg, var(--primary), var(--primary-light)); border-radius: 14px; margin-bottom: 28px; }
+        .hdr h2 { font-family: 'Space Grotesk'; font-size: 30px; color: white; }
+        .hdr p { color: rgba(255,255,255,0.8); font-size: 13px; margin-top: 4px; }
 
-        /* NAVIGATION */
-        #nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 99999; background: rgba(0,0,0,0.85); padding: 10px 20px; border-radius: 50px; }
-        #nav button { width: 48px; height: 48px; border-radius: 50%; border: none; background: #008C5A; color: white; font-size: 20px; cursor: pointer; }
-        #nav button:hover { background: #006B3F; }
-        #nav span { color: white; font-size: 15px; display: flex; align-items: center; padding: 0 12px; }
+        /* ===== NAVIGATION ===== */
+        #nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 99999; background: rgba(0,26,13,0.9); padding: 10px 24px; border-radius: 50px; backdrop-filter: blur(10px); }
+        #nav button { width: 50px; height: 50px; border-radius: 50%; border: none; background: var(--primary-light); color: white; font-size: 20px; cursor: pointer; transition: all 0.3s; }
+        #nav button:hover { background: var(--accent); transform: scale(1.1); }
+        #nav span { color: white; font-size: 15px; display: flex; align-items: center; padding: 0 14px; font-weight: 500; }
 
         #dots { position: fixed; right: 25px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 99999; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(0,107,63,0.3); cursor: pointer; border: 2px solid transparent; }
-        .dot.active { background: #008C5A; transform: scale(1.3); border-color: white; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(78,201,155,0.25); cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
+        .dot.active { background: var(--accent); transform: scale(1.4); border-color: white; }
+        .dot:hover { background: var(--accent); }
     </style>
 </head>
 <body>
 
-<div class="slide active" id="s1">
-    <div class="title-content">
-        <div class="enactus-badge">Enactus IIT Bombay</div>
-        <h1 class="main-title">SUS<span>PAK</span></h1>
-        <p class="subtitle">PIONEERING A FUTURE WHERE PACKAGING HEALS THE PLANET</p>
-        <p class="tagline">Biodegradable food packaging solutions made from sugarcane bagasse & wood pulp</p>
+<!-- SLIDE 1: HERO -->
+<div class="slide active s1" id="s1">
+    <div class="s1-content">
+        <div class="s1-badge">Enactus IIT Bombay</div>
+        <h1>SUS<span>PAK</span></h1>
+        <p class="s1-sub">Pioneering a future where packaging heals the planet</p>
+        <p class="s1-tag">Biodegradable food packaging from sugarcane bagasse & wood pulp</p>
     </div>
 </div>
 
-<div class="slide" id="s2">
-    <div class="slide-header"><h1>THE PROBLEM</h1><p>Single-use plastic dominates food packaging today</p></div>
-    <div class="problem-grid">
-        <div class="impact-card">
-            <h3>ENVIRONMENTAL IMPACT</h3>
-            <div class="stat-item"><div class="stat-number">$220 Bn</div><div class="stat-label">Global plastic food packaging market</div></div>
-            <div class="stat-item"><div class="stat-number">60%</div><div class="stat-label">Of global food packaging is plastic</div></div>
-            <div class="stat-item"><div class="stat-number">30-90 Days</div><div class="stat-label">Decomposition time for our solution</div></div>
+<!-- SLIDE 2: PROBLEM -->
+<div class="slide s2" id="s2">
+    <div class="s2-hero"></div>
+    <div class="s2-content">
+        <div class="s2-header"><h2>THE PROBLEM</h2></div>
+        <div class="s2-grid">
+            <div class="s2-stat"><div class="num">$220 Bn</div><div class="label">Global plastic food packaging market</div></div>
+            <div class="s2-stat"><div class="num">60%</div><div class="label">Of global food packaging is plastic</div></div>
+            <div class="s2-stat"><div class="num">30-90 Days</div><div class="label">Our solution decomposes in</div></div>
         </div>
-        <div class="problems-section">
-            <div class="problem-card"><h4>Manufacturing</h4><p>Energy-intensive production of plastic packaging contributes to carbon emissions</p></div>
-            <div class="problem-card"><h4>Consumption</h4><p>Single-use items used for minutes, lasting centuries in environment</p></div>
-            <div class="problem-card"><h4>Disposal</h4><p>Landfills and oceans filled with microplastics entering food chain</p></div>
-            <div class="problem-card"><h4>Health Risk</h4><p>Chemical leaching from plastics into food causes long-term health issues</p></div>
+        <div class="s2-cards">
+            <div class="s2-card"><h4>Manufacturing</h4><p>Energy-intensive plastic production</p></div>
+            <div class="s2-card"><h4>Consumption</h4><p>Minutes of use, centuries of waste</p></div>
+            <div class="s2-card"><h4>Disposal</h4><p>Microplastics in food chain</p></div>
+            <div class="s2-card"><h4>Health Risk</h4><p>Chemical leaching into food</p></div>
         </div>
-    </div>
-    <div class="global-push">
-        <div class="push-card"><h4>REGULATIONS</h4><p>Extended Producer Responsibility mandates sustainable alternatives</p></div>
-        <div class="push-card"><h4>AWARENESS</h4><p>66% of consumers actively consider sustainability in purchases</p></div>
-        <div class="push-card"><h4>COMMITMENTS</h4><p>100% sustainable packaging by 2030 for major brands</p></div>
     </div>
 </div>
 
-<div class="slide" id="s3">
-    <div class="slide-header"><h1>INDUSTRY LANDSCAPE</h1><p>Market opportunity and target segments</p></div>
-    <div class="industry-grid">
-        <div class="tam-circle">
-            <div class="circle-outer"><div class="circle-middle"><div class="circle-inner"><span class="label">SOM</span><span class="value">$38.27M</span></div></div></div>
+<!-- SLIDE 3: INDUSTRY -->
+<div class="slide s3" id="s3">
+    <div class="hdr"><h2>INDUSTRY LANDSCAPE</h2><p>Market opportunity and target segments</p></div>
+    <div class="s3-grid">
+        <div class="s3-circles">
+            <div class="circle-3"><div class="circle-2"><div class="circle-1"><span class="val">$38.27M</span><span class="txt">SOM</span></div></div></div>
         </div>
-        <div class="info-box">
+        <div class="s6-box light">
             <h3>MARKET JUSTIFICATION</h3>
-            <div class="justification-item"><div class="icon">✓</div><p><strong>TAM:</strong> Global Food Packaging Market valued at $400.9 Billion</p></div>
-            <div class="justification-item"><div class="icon">✓</div><p><strong>SAM:</strong> Indian Food Packaging Market valued at $38.27 Billion</p></div>
-            <div class="justification-item"><div class="icon">✓</div><p><strong>SOM:</strong> 0.1% penetration rate = $38.27 Million</p></div>
-            <div class="justification-item"><div class="icon">✓</div><p><strong>First Customer:</strong> Mirchi & Mime (local restaurant)</p></div>
+            <ul style="list-style:none;">
+                <li style="font-size:13px;color:#666;margin-bottom:10px;padding-left:18px;position:relative;line-height:1.5;"><span style="position:absolute;left:0;color:var(--accent);">✓</span><strong>TAM:</strong> Global Food Packaging - $400.9B</li>
+                <li style="font-size:13px;color:#666;margin-bottom:10px;padding-left:18px;position:relative;line-height:1.5;"><span style="position:absolute;left:0;color:var(--accent);">✓</span><strong>SAM:</strong> Indian Food Packaging - $38.27B</li>
+                <li style="font-size:13px;color:#666;margin-bottom:10px;padding-left:18px;position:relative;line-height:1.5;"><span style="position:absolute;left:0;color:var(--accent);">✓</span><strong>SOM:</strong> 0.1% penetration = $38.27M</li>
+                <li style="font-size:13px;color:#666;margin-bottom:10px;padding-left:18px;position:relative;line-height:1.5;"><span style="position:absolute;left:0;color:var(--accent);">✓</span><strong>First Customer:</strong> Mirchi & Mime</li>
+            </ul>
         </div>
-        <div class="info-box">
+        <div class="s6-box light">
             <h3>COST COMPARISON</h3>
-            <div class="cost-bar"><div class="label">Traditional Plastic</div><div class="bar">1x</div></div>
-            <div class="cost-bar"><div class="label">Molded Fiber</div><div class="bar">1.3x</div></div>
-            <div class="cost-bar"><div class="label">Seaweed-based</div><div class="bar">2.5x</div></div>
-            <div class="cost-bar"><div class="label">Polylactic Acid</div><div class="bar">3x</div></div>
+            <div style="margin-bottom:10px;"><div style="font-size:11px;color:#999;margin-bottom:3px;">Traditional Plastic</div><div style="height:22px;border-radius:11px;background:linear-gradient(90deg,#ccc,#999);width:25%;display:flex;align-items:center;padding:0 8px;color:white;font-size:10px;font-weight:600;">1x</div></div>
+            <div style="margin-bottom:10px;"><div style="font-size:11px;color:#999;margin-bottom:3px;">Molded Fiber</div><div style="height:22px;border-radius:11px;background:linear-gradient(90deg,var(--accent),var(--primary-light));width:35%;display:flex;align-items:center;padding:0 8px;color:white;font-size:10px;font-weight:600;">1.3x</div></div>
+            <div style="margin-bottom:10px;"><div style="font-size:11px;color:#999;margin-bottom:3px;">Seaweed-based</div><div style="height:22px;border-radius:11px;background:linear-gradient(90deg,var(--primary-light),var(--primary));width:65%;display:flex;align-items:center;padding:0 8px;color:white;font-size:10px;font-weight:600;">2.5x</div></div>
+            <div><div style="font-size:11px;color:#999;margin-bottom:3px;">Polylactic Acid</div><div style="height:22px;border-radius:11px;background:linear-gradient(90deg,var(--primary),#003320);width:85%;display:flex;align-items:center;padding:0 8px;color:white;font-size:10px;font-weight:600;">3x</div></div>
         </div>
     </div>
 </div>
 
-<div class="slide" id="s4">
-    <div class="slide-header"><h1>PROPOSED SOLUTION</h1><p>Biodegradable trays from sugarcane bagasse & wood pulp</p></div>
-    <div class="features-grid">
-        <div class="feature-card"><div class="feature-number">01</div><h3>COMPOSTABLE</h3><p>Fully decomposes within 30-90 days in natural composting environments</p></div>
-        <div class="feature-card"><div class="feature-number">02</div><h3>PEELABLE PLA LINER</h3><p>Removable liner that can be sent to industrial compost while tray decomposes naturally</p></div>
-        <div class="feature-card"><div class="feature-number">03</div><h3>HEAT RESISTANT</h3><p>Withstands temperatures up to 150°C with our alkaline treatment process</p></div>
-        <div class="feature-card"><div class="feature-number">04</div><h3>LIGHTWEIGHT & DURABLE</h3><p>Wood pulp ensures it withstands the journey from restaurant to your home</p></div>
-        <div class="feature-card"><div class="feature-number">05</div><h3>WATER RESISTANT</h3><p>Coating layer makes it suitable for wet foods and liquids</p></div>
-        <div class="feature-card"><div class="feature-number">06</div><h3>COST-COMPETITIVE</h3><p>Just 1.3x-1.5x the price of traditional plastic, making sustainability affordable</p></div>
+<!-- SLIDE 4: SOLUTION -->
+<div class="slide s4" id="s4">
+    <div class="hdr"><h2>PROPOSED SOLUTION</h2><p>Biodegradable trays from sugarcane bagasse & wood pulp</p></div>
+    <div class="s4-grid">
+        <div class="s4-card"><div class="s4-num">01</div><h3>COMPOSTABLE</h3><p>Fully decomposes within 30-90 days in natural composting environments</p></div>
+        <div class="s4-card"><div class="s4-num">02</div><h3>PEELABLE PLA LINER</h3><p>Removable liner for industrial composting while tray decomposes naturally</p></div>
+        <div class="s4-card"><div class="s4-num">03</div><h3>HEAT RESISTANT</h3><p>Withstands temperatures up to 150°C with alkaline treatment process</p></div>
+        <div class="s4-card"><div class="s4-num">04</div><h3>LIGHTWEIGHT & DURABLE</h3><p>Wood pulp ensures it withstands the journey from restaurant to home</p></div>
+        <div class="s4-card"><div class="s4-num">05</div><h3>WATER RESISTANT</h3><p>Coating layer makes it suitable for wet foods and liquids</p></div>
+        <div class="s4-card"><div class="s4-num">06</div><h3>COST-COMPETITIVE</h3><p>Just 1.3x-1.5x the price of traditional plastic</p></div>
     </div>
 </div>
 
-<div class="slide" id="s5">
-    <div class="slide-header"><h1>EXPLORING COATING MATERIALS</h1><p>Enhancing bagasse packaging with biodegradable coatings</p></div>
-    <div class="coatings-comparison">
-        <div class="coating-card pla">
-            <h2>POLYLACTIC ACID (PLA)</h2>
-            <div class="coating-feature"><div class="dot"></div><p>Thermoplastic biopolymer</p></div>
-            <div class="coating-feature"><div class="dot"></div><p>Water-resistant surface layer</p></div>
-            <div class="coating-feature"><div class="dot"></div><p>Industrial composting compatible</p></div>
-            <div class="coating-feature"><div class="dot"></div><p>Continuous film formation</p></div>
+<!-- SLIDE 5: COATINGS -->
+<div class="slide s5" id="s5">
+    <div class="hdr"><h2>EXPLORING COATING MATERIALS</h2><p>Enhancing bagasse packaging with biodegradable coatings</p></div>
+    <div class="s5-grid">
+        <div class="s5-card pla">
+            <div class="s5-card-content">
+                <h2>POLYLACTIC ACID (PLA)</h2>
+                <ul>
+                    <li>Thermoplastic biopolymer</li>
+                    <li>Water-resistant surface layer</li>
+                    <li>Industrial composting compatible</li>
+                    <li>Continuous film formation</li>
+                </ul>
+            </div>
         </div>
-        <div class="coating-card seaweed">
-            <h2>SEAWEED-BASED</h2>
-            <div class="coating-feature"><div class="dot"></div><p>Natural polysaccharide coating</p></div>
-            <div class="coating-feature"><div class="dot"></div><p>Edible & biodegradable</p></div>
-            <div class="coating-feature"><div class="dot"></div><p>Antimicrobial properties</p></div>
-            <div class="coating-feature"><div class="dot"></div><p>Renewable ocean resource</p></div>
+        <div class="s5-card seaweed">
+            <div class="s5-card-content">
+                <h2>SEAWEED-BASED</h2>
+                <ul>
+                    <li>Natural polysaccharide coating</li>
+                    <li>Edible & biodegradable</li>
+                    <li>Antimicrobial properties</li>
+                    <li>Renewable ocean resource</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="slide" id="s6">
-    <div class="slide-header"><h1>PLA COATING</h1><p>From pellets to protective layer</p></div>
-    <div class="process-flow">
-        <div class="process-step"><div class="step-circle"><span class="num">01</span><span class="label">HEAT</span></div><p>Industrial dryer softens PLA pellets</p></div>
-        <div class="step-arrow">→</div>
-        <div class="process-step"><div class="step-circle"><span class="num">02</span><span class="label">APPLY</span></div><p>Manual transfer onto bagasse plate</p></div>
-        <div class="step-arrow">→</div>
-        <div class="process-step"><div class="step-circle"><span class="num">03</span><span class="label">PRESS</span></div><p>Hot plate applies pressure & heat</p></div>
-        <div class="step-arrow">→</div>
-        <div class="process-step"><div class="step-circle"><span class="num">04</span><span class="label">COOL</span></div><p>Formation of protective layer</p></div>
+<!-- SLIDE 6: PLA PROCESS -->
+<div class="slide s6" id="s6">
+    <div class="hdr"><h2>PLA COATING</h2><p>From pellets to protective layer</p></div>
+    <div class="s6-flow">
+        <div class="s6-step"><div class="s6-circle"><span class="n">01</span><span class="t">HEAT</span></div><p>Industrial dryer softens PLA pellets</p></div>
+        <div class="s6-arrow">→</div>
+        <div class="s6-step"><div class="s6-circle"><span class="n">02</span><span class="t">APPLY</span></div><p>Manual transfer onto bagasse</p></div>
+        <div class="s6-arrow">→</div>
+        <div class="s6-step"><div class="s6-circle"><span class="n">03</span><span class="t">PRESS</span></div><p>Hot plate applies pressure</p></div>
+        <div class="s6-arrow">→</div>
+        <div class="s6-step"><div class="s6-circle"><span class="n">04</span><span class="t">COOL</span></div><p>Protective layer forms</p></div>
     </div>
-    <div class="info-row">
-        <div class="info-panel light"><h3>WHY PLA?</h3><ul><li>Thermoplastic nature enables heat-based application</li><li>Creates continuous, water-resistant surface layer</li><li>Compatible with industrial composting facilities</li></ul></div>
-        <div class="info-panel dark"><h3>IMPROVISED SETUP</h3><ul><li>Replicated hot press using hot plate with manual pressure</li><li>Used available laboratory materials for release arrangement</li><li>Demonstrated resourcefulness in product development</li></ul></div>
-    </div>
-</div>
-
-<div class="slide" id="s7">
-    <div class="slide-header"><h1>PLA: CHALLENGES & LEARNINGS</h1><p>Understanding the limitations of our initial approach</p></div>
-    <div class="challenges-grid">
-        <div class="challenge-card"><div class="challenge-header"><h3>UNEVEN SPREADING</h3></div><div class="challenge-body"><p>Limited temperature uniformity and pressure control resulted in incomplete contact between PLA and the rough bagasse surface.</p><span class="challenge-tag">Temperature Control</span></div></div>
-        <div class="challenge-card"><div class="challenge-header"><h3>THERMAL MISMATCH</h3></div><div class="challenge-body"><p>Difference in thermal behaviour between polymer and lignocellulosic substrate caused coating inconsistency.</p><span class="challenge-tag">Material Compatibility</span></div></div>
-        <div class="challenge-card"><div class="challenge-header"><h3>KEY INSIGHT</h3></div><div class="challenge-body"><p>Controlled hot-pressing or compression-moulding would significantly improve results with proper process control.</p><span class="challenge-tag">Equipment Needs</span></div></div>
-    </div>
-    <div class="takeaway-banner"><h3>WHAT WE LEARNED</h3><p>The experiment demonstrated the limitations of thermoplastic coating without appropriate processing equipment. It gave us practical insight into the processing requirements for thermoplastic polymers.</p></div>
-</div>
-
-<div class="slide" id="s8">
-    <div class="slide-header" style="background: linear-gradient(90deg, var(--green-mid), var(--green-dark));"><h1>SEAWEED COATING</h1><p>Natural, edible, and renewable</p></div>
-    <div class="seaweed-steps">
-        <div class="seaweed-step"><div class="circle"><span class="num">01</span><span class="txt">DISSOLVE</span></div><h4>Formulation</h4><p>Seaweed pellets dissolved in water to prepare coating solution</p></div>
-        <div class="seaweed-step"><div class="circle"><span class="num">02</span><span class="txt">DIP</span></div><h4>Application</h4><p>Bagasse plates immersed in the coating solution</p></div>
-        <div class="seaweed-step"><div class="circle"><span class="num">03</span><span class="txt">DRY</span></div><h4>Drying</h4><p>Coated plates dried under ambient laboratory conditions</p></div>
-        <div class="seaweed-step"><div class="circle"><span class="num">04</span><span class="txt">TEST</span></div><h4>Verification</h4><p>Surface coverage and adhesion quality assessment</p></div>
-    </div>
-    <div class="info-row">
-        <div class="info-panel dark"><h3>WHY SEAWEED?</h3><ul><li>Naturally abundant and renewable resource</li><li>Edible and fully biodegradable coating</li><li>Inherent antimicrobial properties</li></ul></div>
-        <div class="info-panel light"><h3>DRYING CONDITIONS</h3><ul><li>Ambient laboratory conditions used</li><li>No controlled drying equipment available</li><li>Standardized coating equipment not accessible</li></ul></div>
+    <div class="s6-info">
+        <div class="s6-box light"><h3>WHY PLA?</h3><ul style="list-style:none;"><li>Thermoplastic nature enables heat-based application</li><li>Creates continuous, water-resistant surface</li><li>Compatible with industrial composting</li></ul></div>
+        <div class="s6-box dark"><h3>IMPROVISED SETUP</h3><ul style="list-style:none;"><li>Replicated hot press with hot plate</li><li>Used available lab materials</li><li>Demonstrated resourcefulness</li></ul></div>
     </div>
 </div>
 
-<div class="slide" id="s9">
-    <div class="slide-header" style="background: linear-gradient(90deg, var(--green-mid), var(--green-dark));"><h1>SEAWEED: CHALLENGES & LEARNINGS</h1><p>Understanding adhesion and film formation requirements</p></div>
-    <div class="main-challenge"><h3>POOR ADHESION & UNIFORMITY</h3><p>The bagasse plates' rough, porous surface absorbed the coating solution into pores, preventing continuous film formation. The dried coating showed poor mechanical durability.</p></div>
-    <div class="challenges-split">
-        <div class="split-card factors"><h3>CONTRIBUTING FACTORS</h3><ul><li>No surface pre-treatment performed</li><li>Uncontrolled coating conditions</li><li>Solution concentration not optimized</li><li>Viscosity and immersion time issues</li><li>Substrate surface roughness not addressed</li></ul></div>
-        <div class="split-card insight"><h3>KEY TAKEAWAY</h3><ul><li>Simply depositing material onto porous substrate is insufficient</li><li>Interfacial adhesion is critical for functional coating</li><li>Film formation requires controlled conditions</li><li>Surface pre-treatment may be necessary</li></ul></div>
+<!-- SLIDE 7: CHALLENGES -->
+<div class="slide s7" id="s7">
+    <div class="hdr"><h2>PLA: CHALLENGES & LEARNINGS</h2><p>Understanding the limitations of our initial approach</p></div>
+    <div class="s7-grid">
+        <div class="s7-card"><div class="s7-card-head"><h3>UNEVEN SPREADING</h3></div><div class="s7-card-body"><p>Limited temperature uniformity resulted in incomplete contact between PLA and bagasse surface.</p><span class="s7-tag">Temperature Control</span></div></div>
+        <div class="s7-card"><div class="s7-card-head"><h3>THERMAL MISMATCH</h3></div><div class="s7-card-body"><p>Difference in thermal behaviour between polymer and substrate caused coating inconsistency.</p><span class="s7-tag">Material Compatibility</span></div></div>
+        <div class="s7-card"><div class="s7-card-head"><h3>KEY INSIGHT</h3></div><div class="s7-card-body"><p>Controlled hot-pressing would significantly improve results with proper process control.</p><span class="s7-tag">Equipment Needs</span></div></div>
+    </div>
+    <div class="s7-banner"><h3>WHAT WE LEARNED</h3><p>The experiment demonstrated limitations without appropriate equipment, giving practical insight into thermoplastic polymer processing requirements.</p></div>
+</div>
+
+<!-- SLIDE 8: SEAWEED -->
+<div class="slide s8" id="s8">
+    <div class="hdr" style="background:linear-gradient(90deg,var(--primary-light),var(--primary));"><h2>SEAWEED COATING</h2><p>Natural, edible, and renewable</p></div>
+    <div class="s8-steps">
+        <div class="s8-step"><div class="s8-circle"><span class="n">01</span><span class="t">DISSOLVE</span></div><h4>Formulation</h4><p>Seaweed pellets dissolved in water</p></div>
+        <div class="s8-step"><div class="s8-circle"><span class="n">02</span><span class="t">DIP</span></div><h4>Application</h4><p>Bagasse plates immersed in solution</p></div>
+        <div class="s8-step"><div class="s8-circle"><span class="n">03</span><span class="t">DRY</span></div><h4>Drying</h4><p>Ambient laboratory conditions</p></div>
+        <div class="s8-step"><div class="s8-circle"><span class="n">04</span><span class="t">TEST</span></div><h4>Verification</h4><p>Surface coverage assessment</p></div>
+    </div>
+    <div class="s6-info">
+        <div class="s6-box dark"><h3>WHY SEAWEED?</h3><ul style="list-style:none;"><li>Naturally abundant renewable resource</li><li>Edible and fully biodegradable</li><li>Inherent antimicrobial properties</li></ul></div>
+        <div class="s6-box light"><h3>DRYING CONDITIONS</h3><ul style="list-style:none;"><li>Ambient laboratory conditions used</li><li>No controlled drying equipment</li><li>Standardized equipment not accessible</li></ul></div>
     </div>
 </div>
 
-<div class="slide" id="s10">
-    <div class="slide-header"><h1>TESTING & VALIDATION</h1><p>Real-world testing at IIT Bombay</p></div>
-    <div class="testing-grid">
-        <div class="test-card"><div class="icon-circle">🍽️</div><h3>H12 CANTEEN</h3><p>Successfully tested biodegradable plates with real food at the campus canteen</p></div>
-        <div class="test-card"><div class="icon-circle" style="background: linear-gradient(135deg, var(--green-mid), var(--green-dark));">🚀</div><h3>SINE INCUBATOR</h3><p>Supported by SINE Business Incubator for product development and validation</p></div>
-        <div class="test-card"><div class="icon-circle" style="background: linear-gradient(135deg, var(--green-light), var(--green-mid));">🔄</div><h3>FEEDBACK LOOP</h3><p>Gathering user feedback to iterate and improve product design</p></div>
-    </div>
-    <div class="impact-metrics">
-        <div class="metric"><div class="number">100%</div><div class="label">Plastic<br>Reduction</div></div>
-        <div class="metric"><div class="number">30-90</div><div class="label">Days to<br>Decompose</div></div>
-        <div class="metric"><div class="number">1.3-1.5x</div><div class="label">Cost<br>Multiplier</div></div>
-        <div class="metric"><div class="number">150°C</div><div class="label">Heat<br>Resistance</div></div>
+<!-- SLIDE 9: SEAWEED CHALLENGES -->
+<div class="slide s9" id="s9">
+    <div class="hdr" style="background:linear-gradient(90deg,var(--primary-light),var(--primary));"><h2>SEAWEED: CHALLENGES & LEARNINGS</h2><p>Understanding adhesion and film formation</p></div>
+    <div class="s9-main"><h3>POOR ADHESION & UNIFORMITY</h3><p>The bagasse plates' rough, porous surface absorbed the coating solution, preventing continuous film formation and causing poor mechanical durability.</p></div>
+    <div class="s9-split">
+        <div class="s9-card a"><h3>CONTRIBUTING FACTORS</h3><ul><li>No surface pre-treatment</li><li>Uncontrolled coating conditions</li><li>Solution concentration not optimized</li><li>Viscosity and immersion time issues</li></ul></div>
+        <div class="s9-card b"><h3>KEY TAKEAWAY</h3><ul><li>Depositing material alone is insufficient</li><li>Interfacial adhesion is critical</li><li>Film formation requires control</li><li>Surface pre-treatment necessary</li></ul></div>
     </div>
 </div>
 
-<div class="slide" id="s11">
-    <div class="slide-header"><h1>FUTURE ROADMAP</h1><p>Scaling sustainable packaging across India</p></div>
-    <div class="timeline">
-        <div class="timeline-item"><div class="timeline-circle"><span class="phase">PHASE 1</span><span class="time">NOW</span></div><h4>Lab Testing</h4><p>Prototyping and formulation</p></div>
-        <div class="timeline-item"><div class="timeline-circle"><span class="phase">PHASE 2</span><span class="time">NEXT</span></div><h4>Pilot Production</h4><p>Local vendor partnerships</p></div>
-        <div class="timeline-item"><div class="timeline-circle"><span class="phase">PHASE 3</span><span class="time">6 MO</span></div><h4>Commercial Launch</h4><p>Restaurant partnerships</p></div>
-        <div class="timeline-item"><div class="timeline-circle"><span class="phase">PHASE 4</span><span class="time">1 YR</span></div><h4>Scale</h4><p>Tier 1 & 2 city markets</p></div>
+<!-- SLIDE 10: TESTING -->
+<div class="slide s10" id="s10">
+    <div class="hdr"><h2>TESTING & VALIDATION</h2><p>Real-world testing at IIT Bombay</p></div>
+    <div class="s10-photos">
+        <div class="s10-photo"><span>H12 Canteen Testing</span></div>
+        <div class="s10-photo"><span>SINE Incubator</span></div>
+        <div class="s10-photo"><span>User Feedback</span></div>
     </div>
-    <div class="goals-grid">
-        <div class="goal-card"><div class="header"><h3>SCALABILITY</h3></div><div class="body"><p>Develop scalable manufacturing process for mass production</p></div></div>
-        <div class="goal-card"><div class="header"><h3>PARTNERSHIPS</h3></div><div class="body"><p>Collaborate with McDonald's, Starbucks and local chains</p></div></div>
-        <div class="goal-card"><div class="header"><h3>IMPACT</h3></div><div class="body"><p>Reduce plastic waste by 1000+ tons annually by Year 3</p></div></div>
+    <div class="s10-metrics">
+        <div class="s10-metric"><div class="num">100%</div><div class="txt">Plastic Reduction</div></div>
+        <div class="s10-metric"><div class="num">30-90</div><div class="txt">Days to Decompose</div></div>
+        <div class="s10-metric"><div class="num">1.3-1.5x</div><div class="txt">Cost Multiplier</div></div>
+        <div class="s10-metric"><div class="num">150°C</div><div class="txt">Heat Resistance</div></div>
     </div>
 </div>
 
-<div class="slide" id="s12">
-    <div class="thankyou-content">
+<!-- SLIDE 11: ROADMAP -->
+<div class="slide s11" id="s11">
+    <div class="hdr"><h2>FUTURE ROADMAP</h2><p>Scaling sustainable packaging across India</p></div>
+    <div class="s11-timeline">
+        <div class="s11-item"><div class="s11-circle"><span class="p">PHASE 1</span><span class="t">NOW</span></div><h4>Lab Testing</h4><p>Prototyping & formulation</p></div>
+        <div class="s11-item"><div class="s11-circle"><span class="p">PHASE 2</span><span class="t">NEXT</span></div><h4>Pilot Production</h4><p>Local vendor partnerships</p></div>
+        <div class="s11-item"><div class="s11-circle"><span class="p">PHASE 3</span><span class="t">6 MO</span></div><h4>Commercial Launch</h4><p>Restaurant partnerships</p></div>
+        <div class="s11-item"><div class="s11-circle"><span class="p">PHASE 4</span><span class="t">1 YR</span></div><h4>Scale</h4><p>Tier 1 & 2 markets</p></div>
+    </div>
+    <div class="s11-goals">
+        <div class="s11-goal"><div class="s11-goal-head"><h3>SCALABILITY</h3></div><div class="s11-goal-body"><p>Develop scalable manufacturing for mass production</p></div></div>
+        <div class="s11-goal"><div class="s11-goal-head"><h3>PARTNERSHIPS</h3></div><div class="s11-goal-body"><p>Collaborate with McDonald's, Starbucks & local chains</p></div></div>
+        <div class="s11-goal"><div class="s11-goal-head"><h3>IMPACT</h3></div><div class="s11-goal-body"><p>Reduce 1000+ tons of plastic waste annually by Year 3</p></div></div>
+    </div>
+</div>
+
+<!-- SLIDE 12: THANK YOU -->
+<div class="slide s12" id="s12">
+    <div class="s12-content">
         <h1>THANK YOU</h1>
-        <p class="tagline">Pioneering a future where packaging heals the planet</p>
+        <p class="tag">Pioneering a future where packaging heals the planet</p>
         <p class="org">Enactus IIT Bombay &bull; SusPak</p>
     </div>
-    <div class="bottom-bar"><p>Sustainable Packaging for a Better Tomorrow</p></div>
+    <div class="s12-bar"><p>Sustainable Packaging for a Better Tomorrow</p></div>
 </div>
 
+<!-- NAVIGATION -->
 <div id="nav">
-    <button id="prevBtn">←</button>
+    <button id="prevBtn">&#8592;</button>
     <span id="counter">1 / 12</span>
-    <button id="nextBtn">→</button>
+    <button id="nextBtn">&#8594;</button>
 </div>
 
 <div id="dots">
@@ -413,21 +589,19 @@
 var cur = 1;
 function go(n) {
     if (n < 1 || n > 12) return;
-    document.getElementById('s' + cur).className = 'slide';
+    document.getElementById('s' + cur).classList.remove('active');
     cur = n;
-    document.getElementById('s' + cur).className = 'slide active';
-    document.getElementById('counter').innerHTML = cur + ' / 12';
-    var dots = document.getElementById('dots').children;
-    for (var i = 0; i < dots.length; i++) dots[i].className = 'dot';
-    dots[cur - 1].className = 'dot active';
+    document.getElementById('s' + cur).classList.add('active');
+    document.getElementById('counter').textContent = cur + ' / 12';
+    var dots = document.querySelectorAll('.dot');
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === cur - 1); });
 }
-document.getElementById('prevBtn').onclick = function() { go(cur - 1); };
-document.getElementById('nextBtn').onclick = function() { go(cur + 1); };
-document.onkeydown = function(e) {
-    if (e.keyCode === 37) go(cur - 1);
-    if (e.keyCode === 39) go(cur + 1);
-    if (e.keyCode === 32) { e.preventDefault(); go(cur + 1); }
-};
+document.getElementById('prevBtn').addEventListener('click', function() { go(cur - 1); });
+document.getElementById('nextBtn').addEventListener('click', function() { go(cur + 1); });
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
+});
 </script>
 
 </body>
